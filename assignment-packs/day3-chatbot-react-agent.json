@@ -1,0 +1,90 @@
+{
+  "assignment": {
+    "id": "day3-chatbot-react-agent",
+    "title": "Lab 03 — Chatbot vs ReAct Agent"
+  },
+  "requirements": [
+    {
+      "id": "required_test_cases",
+      "title": "Có đủ 5 test cases",
+      "category": "artifact",
+      "severity": "critical",
+      "artifacts": ["config/test_cases.json"],
+      "checker": "json_test_cases",
+      "check_type": "deterministic",
+      "sources": [{"type": "codelab", "location": "Codelab bước 6"}, {"type": "github", "location": "GitHub rubric"}]
+    },
+    {
+      "id": "baseline_no_tools",
+      "title": "Baseline chỉ dùng một LLM call và không gọi Tool",
+      "category": "implementation",
+      "severity": "high",
+      "artifacts": ["src/app.py"],
+      "checker": "baseline_no_tools",
+      "check_type": "semantic",
+      "sources": [{"type": "codelab", "location": "Codelab bước 3"}]
+    },
+    {
+      "id": "dynamic_react_loop",
+      "title": "ReAct loop chọn Tool động",
+      "category": "implementation",
+      "severity": "critical",
+      "artifacts": ["src/app.py", "src/prompts.py"],
+      "checker": "dynamic_react",
+      "check_type": "semantic",
+      "sources": [{"type": "codelab", "location": "Codelab bước 4"}, {"type": "github", "location": "README · ReAct"}]
+    },
+    {
+      "id": "max_iterations",
+      "title": "Có giới hạn số vòng lặp",
+      "category": "implementation",
+      "severity": "critical",
+      "artifacts": ["src/app.py", "src/prompts.py"],
+      "checker": "max_iterations",
+      "check_type": "deterministic",
+      "sources": [{"type": "codelab", "location": "Codelab bước 4"}, {"type": "github", "location": "README · Guardrails"}]
+    },
+    {
+      "id": "tool_contract",
+      "title": "Tool có contract rõ ràng",
+      "category": "implementation",
+      "severity": "high",
+      "artifacts": ["src/tools.py"],
+      "checker": "tool_contract",
+      "check_type": "semantic",
+      "sources": [{"type": "codelab", "location": "Codelab bước 4"}, {"type": "github", "location": "GitHub rubric"}]
+    },
+    {
+      "id": "failed_trace_rca",
+      "title": "Có failed trace và phân tích nguyên nhân gốc",
+      "category": "report",
+      "severity": "high",
+      "artifacts": ["docs/trace_eval.md"],
+      "checker": "failed_trace",
+      "check_type": "semantic",
+      "sources": [{"type": "codelab", "location": "Codelab bước 7"}]
+    },
+    {
+      "id": "hybrid_flowchart",
+      "title": "Có Hybrid Decision Flowchart",
+      "category": "artifact",
+      "severity": "high",
+      "artifacts": ["docs/hybrid_flowchart.mermaid"],
+      "checker": "file_nonempty",
+      "check_type": "deterministic",
+      "source_conflict": true,
+      "sources": [{"type": "github", "location": "GitHub rubric · 10%"}]
+    },
+    {
+      "id": "no_committed_secrets",
+      "title": "Không commit .env hoặc API key",
+      "category": "security",
+      "severity": "critical",
+      "artifacts": [".env", ".gitignore"],
+      "checker": "no_secrets",
+      "check_type": "deterministic",
+      "sources": [{"type": "codelab", "location": "Codelab · Security"}]
+    }
+  ]
+}
+
