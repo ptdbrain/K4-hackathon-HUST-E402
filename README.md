@@ -7,9 +7,12 @@
 
 | Thành viên | Phần phụ trách |
 |---|---|
-| _Cập nhật trước CP4_ | Product/spec |
-| _Cập nhật trước CP4_ | Prototype/code |
-| _Cập nhật trước CP4_ | Eval/validation/demo |
+| Phan Trọng Đạt — 2A202601138 | _Chưa phân công_ |
+| Bùi Thu Trang — 2A202601758 | _Chưa phân công_ |
+| Phạm Quốc Minh — 2A202601494 | _Chưa phân công_ |
+| Nguyễn Thanh Hùng — 2A202601808 | _Chưa phân công_ |
+| Phạm Danh Tuấn Dũng — 2A202601978 | _Chưa phân công_ |
+| Đinh Việt Anh — 2A202601516 | _Chưa phân công_ |
 
 ## Trạng thái nộp bài
 
