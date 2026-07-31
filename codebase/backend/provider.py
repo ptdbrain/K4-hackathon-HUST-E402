@@ -43,14 +43,17 @@ def _post_json(url: str, body: dict[str, Any], headers: dict[str, str]) -> dict[
     )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.load(response)
+            try:
+                return json.load(response)
+            except UnicodeDecodeError as error:
+                raise RuntimeError("AI provider không trả UTF-8 hợp lệ") from error
     except urllib.error.HTTPError as error:
         raise RuntimeError(f"AI provider HTTP {error.code}") from error
     except (urllib.error.URLError, TimeoutError) as error:
         raise RuntimeError("Không gọi được AI provider") from error
 
 
-def generate_json(prompt: str, schema: dict[str, Any]) -> tuple[dict[str, Any], str, str]:
+def generate_json(prompt: str, schema: dict[str, Any], system_prompt: str = "Return only JSON matching the supplied schema.") -> tuple[dict[str, Any], str, str]:
     provider, model = provider_config()
     max_tokens = min(max(int(os.getenv("AI_MAX_TOKENS", "1800")), 256), 8000)
     try:
@@ -61,6 +64,7 @@ def generate_json(prompt: str, schema: dict[str, Any]) -> tuple[dict[str, Any], 
             payload = _post_json(
                 f"https://generativelanguage.googleapis.com/v1beta/models/{urllib.parse.quote(model, safe='._-')}:generateContent",
                 {
+                    "systemInstruction": {"parts": [{"text": system_prompt}]},
                     "contents": [{"parts": [{"text": prompt}]}],
                     "generationConfig": {"responseMimeType": "application/json", "responseSchema": schema, "maxOutputTokens": max_tokens},
                 },
@@ -70,7 +74,7 @@ def generate_json(prompt: str, schema: dict[str, Any]) -> tuple[dict[str, Any], 
         elif provider == "OLLAMA":
             payload = _post_json(
                 f"{os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434').rstrip('/')}/api/chat",
-                {"model": model, "messages": [{"role": "user", "content": prompt}], "format": schema, "stream": False, "options": {"num_predict": max_tokens, "temperature": 0.2}},
+                {"model": model, "messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": prompt}], "format": schema, "stream": False, "options": {"num_predict": max_tokens, "temperature": 0.2}},
                 {},
             )
             text = payload["message"]["content"]
@@ -85,7 +89,7 @@ def generate_json(prompt: str, schema: dict[str, Any]) -> tuple[dict[str, Any], 
                 f"{base_url}/chat/completions",
                 {
                     "model": model,
-                    "messages": [{"role": "user", "content": prompt}],
+                    "messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": prompt}],
                     "max_tokens": max_tokens,
                     "stream": False,
                     "response_format": {

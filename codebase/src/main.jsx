@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -107,7 +107,7 @@ function Requirements({ pack, onDone }) {
     const enabled = items.filter(item => item.enabled !== false);
     await request(`/assignments/${pack.assignment_id}/confirm`, {
       method: "POST",
-      body: JSON.stringify({ requirements: enabled }),
+      body: JSON.stringify({ requirement_ids: enabled.map(item => item.id) }),
     });
     onDone({ ...pack, requirements: enabled });
   }
@@ -132,7 +132,7 @@ function Requirements({ pack, onDone }) {
           <label className={item.enabled === false ? "requirement disabled" : "requirement"} key={item.id}>
             <input type="checkbox" checked={item.enabled !== false} onChange={() => setItems(items.map(x => x.id === item.id ? { ...x, enabled: x.enabled === false } : x))} />
             <span className={`status-dot ${item.severity}`}></span>
-            <span className="requirement-copy"><strong>{item.title}</strong><small>Artifact: {item.artifacts.join(", ")} · {item.check_type === "semantic" ? "AI semantic review" : "Kiểm tra tự động"}</small></span>
+            <span className="requirement-copy"><strong>{item.title}</strong><small>Artifact: {item.artifacts.join(", ")} · {item.checker === "semantic" ? "Cần người xác nhận" : item.check_type === "semantic" ? "Phân tích tĩnh" : "Kiểm tra tự động"}</small></span>
             <span className="source">{item.sources.map(x => x.location).join(" · ")}</span>
           </label>
         ))}
@@ -180,16 +180,13 @@ function Submission({ pack, onDone }) {
   );
 }
 
-function Results({ result, onRerun, rerunning, rerunError }) {
-  const [feedback, setFeedback] = useState(false);
+function Results({ result, onResult, onRerun, rerunning, rerunError }) {
   const risk = result.highest_risk;
-  useEffect(() => setFeedback(false), [result.checked_at]);
   async function markWrong() {
-    await request(`/analysis/${result.analysis_id}/feedback`, {
+    onResult(await request(`/analysis/${result.analysis_id}/feedback`, {
       method: "POST",
-      body: JSON.stringify({ requirement_id: risk.requirement_id, reason: "AI đọc sai code" }),
-    });
-    setFeedback(true);
+      body: JSON.stringify({ requirement_id: risk.requirement_id, reason: "Người dùng báo kết quả chưa đúng" }),
+    }));
   }
   return (
     <section className="results-grid">
@@ -211,8 +208,8 @@ function Results({ result, onRerun, rerunning, rerunError }) {
           </div>
           <div className="action"><b>Hành động tiếp theo</b><ol>{risk.recommended_action.map(item => <li key={item}>{item}</li>)}</ol></div>
           <div className="card-actions">
-            {risk.repo_evidence[0]?.url ? <a href={risk.repo_evidence[0].url} target="_blank">Mở file trên GitHub ↗</a> : null}
-            <button onClick={markWrong} disabled={feedback}>{feedback ? "Đã chuyển sang Human review" : "AI đánh giá sai"}</button>
+            {risk.repo_evidence[0]?.url ? <a href={risk.repo_evidence[0].url} target="_blank" rel="noreferrer">Mở file trên GitHub ↗</a> : null}
+            <button onClick={markWrong}>Kết quả chưa đúng</button>
           </div>
         </article> : null}
       </div>
@@ -253,7 +250,7 @@ function App() {
         {step === 0 ? <Sources onDone={data => { setPack(data); setStep(1); }} /> : null}
         {step === 1 ? <Requirements pack={pack} onDone={data => { setPack(data); setStep(2); }} /> : null}
         {step === 2 ? <Submission pack={pack} onDone={data => { setResult(data); setStep(3); }} /> : null}
-        {step === 3 ? <Results result={result} onRerun={rerun} rerunning={rerunning} rerunError={rerunError} /> : null}
+        {step === 3 ? <Results result={result} onResult={setResult} onRerun={rerun} rerunning={rerunning} rerunError={rerunError} /> : null}
       </main>
       <footer><b>LabGuard</b><span>Không tự sửa · Không chạy code · Không tự nộp bài</span></footer>
     </>
