@@ -1,4 +1,4 @@
-# AI SPEC — LabGuard · Nhóm Demo-Hackathon · Zone chưa được cung cấp
+# AI SPEC — LabGuard · Nhóm HUST
 
 Hướng: C — Làn mở · Loại: Tính năng mới
 Trạng thái bằng chứng: phần kỹ thuật đã đo; đã có khảo sát pain tổng hợp 50 phản hồi; quote, thời gian và validation prototype vẫn đang chờ team bổ sung.
@@ -24,12 +24,9 @@ Trạng thái bằng chứng: phần kỹ thuật đã đo; đã có khảo sát
 
 ## §2. Impact & quyết định chọn
 
-Các số dưới đây chỉ dùng dữ liệu nhìn thấy trong biểu đồ; phần không được hỏi được ghi là “chưa đo”.
-
 | Ứng viên | Bao nhiêu người gặp | Tần suất | Tốn mỗi lần | Khả thi trong hackathon | Quyết định |
 |---|---:|---:|---:|---|---|
-| Preflight đối chiếu rubric với repo | 38/50 quên file; 35/50 thiếu nội dung; 33/50 không chắc đã đủ yêu cầu | Chưa đo | Chưa đo | Có: chỉ đọc repo | Chọn |
-| Bot trả lời logistics deadline/link | Chưa đo | Chưa đo | Sai deadline có thể làm nộp muộn | Có nhưng cần nguồn chính thức | Loại: chưa có evidence |
+| Khảo sát người dùng | 38/50 quên file; 35/50 thiếu nội dung; 33/50 không chắc đã đủ yêu cầu | Chưa đo | Chưa đo | Có: chỉ đọc repo | Chọn |
 | Tóm tắt bài giảng thành flashcard | Chưa đo | Chưa đo | Chưa đo | Có | Loại: ngoài lát cắt pre-submission |
 
 - Ứng viên chọn: LabGuard. Một pain trực tiếp đã vượt ngưỡng 50%: **38/50 (76%)** người trả lời chọn “quên nộp một hoặc nhiều file”.
@@ -114,7 +111,7 @@ Kết quả đầy đủ nằm tại `eval/run-01.json`, `eval/run-02.json` và 
 
 ## §8. Phân công & kế hoạch
 
-| Thành viên | Phần có tên |
+| Thành viên | Phân công |
 |---|---|
 | Phan Trọng Đạt | Product owner, spec và impact |
 | Bùi Thu Trang | Evidence survey và validation log |
