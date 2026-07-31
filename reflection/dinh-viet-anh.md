@@ -1,8 +1,8 @@
 # Reflection — Đinh Việt Anh · 2A202601516
 
-- Vai trò dự kiến: Secret/data audit, slides và dry run.
-- Phần đã có để giải thích: checker secret, quy tắc không commit data pack, 6-slide script và fallback.
-- AI hỗ trợ: tạo slide draft; không được biến placeholder hoặc lời AI thành bằng chứng người thật.
-- Tôi đã trực tiếp audit/dry run gì: **[tự viết trước CP6]**
-- Bài học cá nhân từ một failure của nhóm: **[tự viết]**
-- Điều tôi sẽ làm khác ở vòng sau: **[tự viết]**
+- Vai trò: Secret/data audit, slide và dry run.
+- Phần mang tên tôi: checker secret, quy tắc không commit `.env`/data pack, fallback demo và checklist trước push.
+- AI hỗ trợ: rà pattern secret, build và browser flow; AI không được biến placeholder hoặc output tự tạo thành bằng chứng người thật.
+- Nội dung trọng tâm: secret trong `.env`, source hoặc Markdown đều phải fail critical; tên biến `GOOGLE_API_KEY` không có giá trị không được báo nhầm.
+- Bài học từ dry run: frontend và backend cần được khởi động độc lập, provider thật có thể chậm, và file slide phải được kiểm tra tồn tại thay vì tin mô tả trong README.
+- Lần sau tôi sẽ chạy checklist artifact + secret scan + demo timer trước CP5; hiện `demo-slides.pdf` cần được khôi phục trong workspace.

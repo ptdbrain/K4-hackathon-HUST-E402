@@ -19,7 +19,7 @@ from typing import Any, Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from pydantic import BaseModel, Field, ValidationError, field_validator
+from pydantic import BaseModel, Field, ValidationError, field_validator, model_validator
 
 from backend.provider import generate_json, provider_config
 
@@ -95,6 +95,16 @@ class DynamicRequirement(BaseModel):
         if any(path.startswith(("/", "\\")) or ".." in Path(path).parts or len(path) > 200 for path in paths):
             raise ValueError("Artifact path không an toàn")
         return paths
+
+    @model_validator(mode="after")
+    def valid_checker_arguments(self) -> DynamicRequirement:
+        if self.checker == "python_symbol" and not self.symbol.isidentifier():
+            raise ValueError("python_symbol cần symbol Python hợp lệ")
+        if self.checker == "json_array_min" and self.min_count < 1:
+            raise ValueError("json_array_min cần min_count lớn hơn 0")
+        if self.checker == "text_contains" and not any(value.strip() for value in self.expected):
+            raise ValueError("text_contains cần expected không rỗng")
+        return self
 
 
 app = FastAPI(title="LabGuard API", version="0.1.0")

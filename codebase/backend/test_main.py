@@ -126,6 +126,26 @@ def test_ai_makes_duplicate_ids_unique() -> None:
     assert [item["id"] for item in requirements] == ["artifact", "artifact_2", "artifact_3"]
 
 
+def test_ai_rejects_invalid_checker_arguments() -> None:
+    requirement = {
+        "id": "invalid_symbol",
+        "title": "Requirement không hợp lệ",
+        "category": "implementation",
+        "severity": "high",
+        "artifacts": ["src/app.py"],
+        "checker": "python_symbol",
+        "expected": [],
+        "min_count": 0,
+        "symbol": "==",
+        "source_locations": ["Codelab"],
+        "source_conflict": False,
+    }
+    with patch("backend.main.generate_json", return_value=({"requirements": [requirement] * 3}, "OLLAMA", "test-model")):
+        requirements, trace = extract_with_ai("Nộp code")
+    assert requirements is None
+    assert "symbol Python hợp lệ" in trace["reason"]
+
+
 if __name__ == "__main__":
     test_demo_finds_hardcoded_react_as_highest_risk_candidate()
     test_comments_do_not_count_as_dynamic_react()
@@ -137,4 +157,6 @@ if __name__ == "__main__":
     test_all_ai_providers_parse_json()
     test_provider_parses_fenced_json()
     test_ai_can_build_pack_for_another_lab()
+    test_ai_makes_duplicate_ids_unique()
+    test_ai_rejects_invalid_checker_arguments()
     print("backend self-check passed")

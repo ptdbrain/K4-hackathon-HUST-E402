@@ -12,7 +12,7 @@ async function request(path, options) {
     headers: { "Content-Type": "application/json" },
     ...options,
   });
-  const data = await response.json();
+  const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : data.detail?.map(item => item.msg).join(", ") || "Không thể xử lý yêu cầu.");
   return data;
 }

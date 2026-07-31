@@ -1,38 +1,20 @@
-# Evidence survey — cần team thực hiện
+# Evidence survey
 
-Mục tiêu: kiểm tra pain, không hỏi “bạn có thích LabGuard không”. Thu ≥20 người ngoài nhóm và xin phép lưu tên/vai + quote trong repo.
+## Kết quả tổng hợp đã nhận
 
-Rule khóa trước khi khảo sát: “xác nhận pain” khi người trả lời đã phải đối chiếu ≥2 nguồn và **một trong hai**: mất >10 phút hoặc từng phát hiện thiếu yêu cầu sau lần tự rà đầu.
+Ảnh tổng hợp Google Forms do team cung cấp ngày 31/07/2026 có `n = 50`:
 
-Hỏi về lần nộp lab gần nhất:
+| Lựa chọn | Số người | Tỷ lệ |
+|---|---:|---:|
+| Quên nộp một hoặc nhiều file | 38 | 76% |
+| Thiếu nội dung được yêu cầu | 35 | 70% |
+| Không biết bài đã đáp ứng đầy đủ yêu cầu chưa | 33 | 66% |
+| Nộp sai đường dẫn GitHub | 31 | 62% |
+| Các file trong bài không nhất quán | 29 | 58% |
+| Tùy chọn 3 — nhãn không xác định | 28 | 56% |
+| Evidence không chứng minh được yêu cầu | 27 | 54% |
+| Chưa từng gặp vấn đề | 26 | 52% |
 
-1. Bạn đã đối chiếu những nguồn nào trước khi nộp?
-2. Bạn mất khoảng bao nhiêu phút?
-3. Sau lần rà đầu, bạn có phát hiện mình bỏ sót yêu cầu nào không? Hãy kể nguyên văn.
-4. Điều gì khó chịu hoặc rủi ro nhất trong lần đó?
-5. Bạn có đồng ý thử prototype 10 phút trước Demo không?
+Đây là câu hỏi nhiều lựa chọn và có câu trả lời mâu thuẫn, nên không thể suy ra số người “xác nhận pain” theo rule bên dưới. Ảnh cũng không có tên, thời gian hoặc câu trả lời nguyên văn; vì vậy chưa đạt evidence chuẩn A của rubric.
 
-| ID | Tên/vai | Nguồn đã rà | Phút | Bỏ sót sau rà đầu + quote nguyên văn | Pain? | Đồng ý thử? |
-|---|---|---:|---:|---|---|---|
-| S01 | | | | | | |
-| S02 | | | | | | |
-| S03 | | | | | | |
-| S04 | | | | | | |
-| S05 | | | | | | |
-| S06 | | | | | | |
-| S07 | | | | | | |
-| S08 | | | | | | |
-| S09 | | | | | | |
-| S10 | | | | | | |
-| S11 | | | | | | |
-| S12 | | | | | | |
-| S13 | | | | | | |
-| S14 | | | | | | |
-| S15 | | | | | | |
-| S16 | | | | | | |
-| S17 | | | | | | |
-| S18 | | | | | | |
-| S19 | | | | | | |
-| S20 | | | | | | |
-
-Tổng hợp sau khi đủ 20 dòng: `n = __`; `__ / __ = __%` xác nhận pain; median thời gian `__ phút`; willing users: `__`.
+Raw log từng người, thời gian, quote và willing-user consent không có trong dữ liệu được cung cấp.

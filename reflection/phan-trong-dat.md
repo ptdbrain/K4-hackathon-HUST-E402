@@ -1,8 +1,8 @@
 # Reflection — Phan Trọng Đạt · 2A202601138
 
-- Vai trò dự kiến: Product owner, spec và impact.
-- Phần đã có để giải thích: lát cắt một câu, conditional automation, cost-of-error và non-goals trong `spec.md`.
-- AI hỗ trợ: tạo bản nháp artifact và chỉ ra các ô không thể điền nếu chưa có người thật.
-- Tôi đã trực tiếp làm/kiểm tra: **[tự viết trước CP6]**
-- Bài học cá nhân từ case R04 (comment bị hiểu nhầm là implementation): **[tự viết bằng lời của mình]**
-- Điều tôi sẽ làm khác ở vòng sau: **[tự viết]**
+- Vai trò: Product owner, spec và impact.
+- Phần mang tên tôi: lát cắt một câu, bảng ba ứng viên, conditional automation, cost-of-error và non-goals trong `spec.md`.
+- AI hỗ trợ: dựng bản nháp và rà placeholder; quyết định giữ số liệu khảo sát có giới hạn, không biến dữ liệu tổng hợp thành quote hoặc validation giả, thuộc trách nhiệm của nhóm.
+- Nội dung trọng tâm: LabGuard chỉ đọc repo, không sửa/nộp thay học viên; case semantic chuyển Human review; 38/50 người quên file là evidence chọn pain nhưng chưa phải evidence chuẩn A.
+- Bài học từ R04: một comment có đúng từ khóa vẫn không chứng minh có ReAct loop; product spec phải định nghĩa bằng hành vi kiểm chứng được, không bằng dấu hiệu bề mặt.
+- Lần sau tôi sẽ khóa cách thu raw survey ngay từ đầu và kiểm tra từng tiêu chí rubric trước khi chốt scope.

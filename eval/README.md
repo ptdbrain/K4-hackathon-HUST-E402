@@ -9,4 +9,4 @@ Quality bar khóa trong `spec.md`: ≥85% toàn bộ và 100% case secret critic
 - `run_eval.py`: chạy lại toàn bộ bộ test.
 - `run_ai_smoke.py`: gọi provider đã cấu hình và chỉ lưu provider, model, hash input, requirement IDs.
 
-Provenance: 24 case synthetic và 14 case từ phiên team tự dùng thử sản phẩm ngày 2026-07-31. Không đưa data pack hoặc thông tin cá nhân vào repo.
+Provenance: 24 case synthetic và 14 case self-test ngày 2026-07-31. 

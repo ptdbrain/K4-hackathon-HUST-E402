@@ -1,4 +1,4 @@
-# AI SPEC — LabGuard · Nhóm Demo-Hackathon · Zone [ĐIỀN]
+# AI SPEC — LabGuard · Nhóm Demo-Hackathon · Zone chưa được cung cấp
 
 Hướng: C — Làn mở · Loại: Tính năng mới
 Trạng thái bằng chứng: phần kỹ thuật đã đo; đã có khảo sát pain tổng hợp 50 phản hồi; quote, thời gian và validation prototype vẫn đang chờ team bổ sung.
@@ -19,7 +19,7 @@ Trạng thái bằng chứng: phần kỹ thuật đã đo; đã có khảo sát
   - Evidence không chứng minh được yêu cầu: **27/50 (54%)**.
   - “Chưa từng gặp vấn đề”: **26/50 (52%)**.
 - Giới hạn evidence: đây là câu hỏi nhiều lựa chọn và có lựa chọn mâu thuẫn; ảnh tổng hợp không có dữ liệu từng người, thời gian hay quote. Vì vậy chưa thể tính “% xác nhận pain” theo rule khóa trong `validation/evidence-survey.md`.
-- ≥5 quote có tên/vai: **[CẦN NGƯỜI THẬT: bổ sung vào survey log]**.
+- ≥5 quote có tên/vai: **Chưa có raw survey log để xác minh.**
 - Evidence kỹ thuật không thay thế evidence pain: repo có 8 loại requirement mẫu thuộc artifact, implementation, report và security; golden set hiện có 24 case synthetic và 14 case từ team tự dùng thử.
 
 ## §2. Impact & quyết định chọn
@@ -29,6 +29,8 @@ Các số dưới đây chỉ dùng dữ liệu nhìn thấy trong biểu đồ;
 | Ứng viên | Bao nhiêu người gặp | Tần suất | Tốn mỗi lần | Khả thi trong hackathon | Quyết định |
 |---|---:|---:|---:|---|---|
 | Preflight đối chiếu rubric với repo | 38/50 quên file; 35/50 thiếu nội dung; 33/50 không chắc đã đủ yêu cầu | Chưa đo | Chưa đo | Có: chỉ đọc repo | Chọn |
+| Bot trả lời logistics deadline/link | Chưa đo | Chưa đo | Sai deadline có thể làm nộp muộn | Có nhưng cần nguồn chính thức | Loại: chưa có evidence |
+| Tóm tắt bài giảng thành flashcard | Chưa đo | Chưa đo | Chưa đo | Có | Loại: ngoài lát cắt pre-submission |
 
 - Ứng viên chọn: LabGuard. Một pain trực tiếp đã vượt ngưỡng 50%: **38/50 (76%)** người trả lời chọn “quên nộp một hoặc nhiều file”.
 - Lý do thiết kế hiện tại: một flow 5 phút, không cần quyền ghi repo, phần checker xác định kiểm lại được.
@@ -99,7 +101,7 @@ Các số dưới đây chỉ dùng dữ liệu nhìn thấy trong biểu đồ;
 | Traceability | Finding có requirement id, artifact và chi tiết kiểm tra |
 
 - Golden set: `eval/golden-set.json`, 38 case: 24 synthetic và 14 case từ team tự dùng thử sản phẩm.
-- Provenance: 14 case `O01`–`O14` ghi lại input thực tế của phiên self-test ngày 2026-07-31; không dán data pack hoặc thông tin cá nhân vào repo.
+- Provenance: 14 case `O01`–`O14` từ phiên self-test ngày 2026-07-31. Chúng không thay thế yêu cầu rubric “≥10 case từ chatlog thật”; mục này chưa đạt vì workspace không có data pack.
 - Quality bar đã khóa: **≥85% toàn bộ và 100% các case secret critical**.
 
 | Lượt | Kết quả | So với bar | Failure |
@@ -121,9 +123,8 @@ Kết quả đầy đủ nằm tại `eval/run-01.json`, `eval/run-02.json` và 
 | Phạm Danh Tuấn Dũng | Frontend, demo path và fallback |
 | Đinh Việt Anh | Secret/data audit, slides và dry run |
 
-- Team phải xác nhận lại phân công trong README; mỗi người phải giải thích được phần có tên.
-- Willing users: **[CẦN NGƯỜI THẬT: tên 1] · [tên 2] · [tên 3]**.
-- Validation CP5: ≥5 người ngoài nhóm, ít nhất 2 willing users; Bùi Thu Trang log theo `validation/feedback-log.md`.
+- Willing users: **Chưa có tên người thật ngoài nhóm được xác minh.**
+- Validation CP5: **Chưa thực hiện với người thật.**
 - Multi-prototype: so hai phương án “AI tự kết luận” và “checker + Human review”; chọn phương án hai vì cost-of-error của false pass cao.
 
 ## §9. Changelog
@@ -134,4 +135,6 @@ Kết quả đầy đủ nằm tại `eval/run-01.json`, `eval/run-02.json` và 
 | CP3 | Thêm AI extraction có nhãn mode và fallback | Pack tĩnh không đạt AI-call thật |
 | CP3 | Checker ReAct yêu cầu assignment + registry lookup | Eval R04 phát hiện false positive từ comment |
 | Survey | Ghi nhận biểu đồ tổng hợp 50 phản hồi | 76% chọn quên file; 70% chọn thiếu nội dung; 66% không chắc bài đã đủ |
-| CP5 | **[CẦN NGƯỜI THẬT]** | Trỏ tới feedback V__ |
+| Dry run | Chuẩn hóa lỗi khi API trả response rỗng | D02 từng hiện lỗi `JSON.parse` thay vì thông báo hữu ích |
+| Dry run | Loại checker arguments do AI tạo nhưng không hợp lệ | D04 từng tạo finding “Không tìm thấy ==” |
+| CP5 | Chưa có thay đổi từ feedback người thật | V01–V05 chưa được thực hiện |

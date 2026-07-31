@@ -1,24 +1,14 @@
-# Prototype validation — cần team thực hiện
+# Prototype validation
 
-## Protocol 10 phút/người
+Validation người thật chưa được thực hiện. Không có tên/vai, quan sát hoặc quote để ghi nhận.
 
-Giao task: “Không cần mình hướng dẫn, hãy dùng LabGuard để kiểm tra repo demo, tìm rủi ro cao nhất và nói bạn sẽ làm gì tiếp.” Im lặng quan sát. Sau task hỏi đúng:
+## Dry run kỹ thuật — 31/07/2026
 
-1. Điều gì khó hiểu hoặc khó chịu nhất?
-2. Kết quả này bạn có tin không — vì sao?
-3. Bạn có dùng thật không — vì sao / vì sao chưa?
+| ID | Cách kiểm tra | Quan sát | Xử lý |
+|---|---|---|---|
+| D01 | Playwright, flow Codelab mẫu → AI extraction → xác nhận → repo demo | Flow đi hết 4 bước và hiện `NOT READY`; AI thật được gắn nhãn `OLLAMA · qwen2.5:7b-instruct-q3_K_S` | Giữ đường demo repo offline |
+| D02 | Tắt backend khi frontend đang chạy | UI từng hiện lỗi kỹ thuật `JSON.parse: unexpected end of data` | `request()` nay chuyển lỗi response rỗng thành “Không thể xử lý yêu cầu.” |
+| D03 | Đo bước AI extraction | Provider mất gần 90 giây mới trả kết quả | Giữ timeout/fallback; dùng trace đã lưu nếu provider không ổn định khi demo |
+| D04 | Kiểm tra requirement do AI tạo | AI từng trả `python_symbol` với symbol `==`, dẫn tới finding vô nghĩa | Pydantic nay loại checker arguments không hợp lệ trước khi phân tích repo |
 
-Không ghi “đã test” nếu người đó chưa tự thao tác. Cần ≥5 người ngoài nhóm, trong đó ≥2 willing users đã khai.
-
-| ID | Tên/vai | Willing user? | Quan sát thao tác/kẹt đâu | Quote nguyên văn | Nghiêm trọng |
-|---|---|---|---|---|---|
-| V01 | | | | | |
-| V02 | | | | | |
-| V03 | | | | | |
-| V04 | | | | | |
-| V05 | | | | | |
-
-- Chủ đề lặp nhiều nhất: **[điền sau test]**
-- Thay đổi làm trước Demo: **[1–2 thay đổi, trỏ ID]**
-- Giữ nguyên có lý do: **[điền]**
-- Backlog một tuần: **[điền]**
+Các dòng D01–D04 là kiểm tra kỹ thuật, không phải validation người thật.
