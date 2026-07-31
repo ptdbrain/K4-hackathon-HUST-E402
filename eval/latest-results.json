@@ -1,0 +1,236 @@
+{
+  "run_at": "2026-07-31T03:35:01.264831+00:00",
+  "cases": 38,
+  "passed": 38,
+  "pass_rate": 100.0,
+  "results": [
+    {
+      "id": "N01",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "N02",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "N03",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "N04",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "N05",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "N06",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "N07",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "N08",
+      "expected": "needs_review",
+      "actual": "needs_review",
+      "pass": true
+    },
+    {
+      "id": "N09",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "N10",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "T01",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "T02",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "A01",
+      "expected": "needs_review",
+      "actual": "needs_review",
+      "pass": true
+    },
+    {
+      "id": "A02",
+      "expected": "needs_review",
+      "actual": "needs_review",
+      "pass": true
+    },
+    {
+      "id": "S01",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "S02",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "D01",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "D02",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "R01",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "R02",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "R03",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "R04",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "G01",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "G02",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "O01",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O02",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "O03",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O04",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "O05",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O06",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "O07",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O08",
+      "expected": "needs_review",
+      "actual": "needs_review",
+      "pass": true
+    },
+    {
+      "id": "O09",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O10",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O11",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    },
+    {
+      "id": "O12",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O13",
+      "expected": "pass",
+      "actual": "pass",
+      "pass": true
+    },
+    {
+      "id": "O14",
+      "expected": "fail",
+      "actual": "fail",
+      "pass": true
+    }
+  ]
+}

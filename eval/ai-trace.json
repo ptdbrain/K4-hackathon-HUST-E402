@@ -1,0 +1,12 @@
+{
+  "mode": "ai",
+  "provider": "OLLAMA",
+  "model": "qwen2.5:7b-instruct-q3_K_S",
+  "input_sha256": "5e83f597dc1edfe9c0496606f9efaa62a2d55ce1c84d8e889196241e18a7bc94",
+  "rejected_requirements": 0,
+  "selected_ids": [
+    "repo_structure",
+    "no_env_files",
+    "api_key_policy"
+  ]
+}

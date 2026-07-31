@@ -99,6 +99,7 @@ button:disabled { opacity: .48; cursor: not-allowed; }
 .readiness .ready { color: var(--green); background: #e0f7eb; }
 .readiness div { color: #79817d; font-size: 12px; }
 .readiness b { color: var(--green); }
+.run-time { display: block; margin-top: 5px; color: #8b918d; font: 10px "DM Mono"; }
 .risk-card { margin-top: 18px; padding: 32px; border-top: 4px solid var(--orange); }
 .critical-label { color: var(--orange); font: 500 10px "DM Mono"; letter-spacing: .1em; }
 .risk-card h2 { margin: 7px 0 25px; font-size: 28px; }
@@ -132,4 +133,3 @@ footer { width: min(1180px, calc(100% - 40px)); margin: 32px auto 25px; padding-
   .repo-row { display: block; }
   .repo-row button { width: 100%; margin-top: 9px; }
 }
-

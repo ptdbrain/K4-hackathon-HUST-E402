@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
 const API = "/api";
 const assignmentRepo = "https://github.com/VinUni-AI20k/day03-cohorts34-chatbot-agentic-agent";
 const steps = ["Nguồn yêu cầu", "Xác nhận", "Bài làm", "Kết quả"];
+const sampleCodelab = "Bài Lab cần 5 test cases, Baseline không gọi Tool, ReAct chọn Tool động và có MAX_ITERATIONS. Không commit API key. Ghi failed trace và RCA.";
 
 async function request(path, options) {
   const response = await fetch(`${API}${path}`, {
@@ -12,7 +13,7 @@ async function request(path, options) {
     ...options,
   });
   const data = await response.json();
-  if (!response.ok) throw new Error(data.detail || "Không thể xử lý yêu cầu.");
+  if (!response.ok) throw new Error(typeof data.detail === "string" ? data.detail : data.detail?.map(item => item.msg).join(", ") || "Không thể xử lý yêu cầu.");
   return data;
 }
 
@@ -34,6 +35,12 @@ function Sources({ onDone }) {
   const [repo, setRepo] = useState(assignmentRepo);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+
+  async function loadFiles(event) {
+    const selected = [...event.target.files];
+    setFiles(selected);
+    setText((await Promise.all(selected.map(file => file.text()))).join("\n\n"));
+  }
 
   async function extract() {
     setBusy(true);
@@ -61,10 +68,10 @@ function Sources({ onDone }) {
         <p className="eyebrow">01 · Codelab</p>
         <h2>Thêm hướng dẫn thực hành</h2>
         <label className="dropzone">
-          <input type="file" accept=".pdf,image/png,image/jpeg" multiple onChange={e => setFiles([...e.target.files])} />
+          <input type="file" accept=".md,.txt,text/plain,text/markdown" multiple onChange={loadFiles} />
           <span className="upload-icon">↥</span>
-          <strong>Kéo thả ảnh hoặc PDF</strong>
-          <small>PNG, JPG hoặc PDF · chỉ dùng để trích xuất yêu cầu</small>
+          <strong>Kéo thả Markdown hoặc text</strong>
+          <small>MD hoặc TXT · nội dung được gửi để trích xuất yêu cầu</small>
         </label>
         {files.length > 0 ? <p className="success">✓ Đã chọn {files.length} tệp Codelab</p> : null}
         <div className="or"><span>hoặc dán nội dung</span></div>
@@ -83,7 +90,7 @@ function Sources({ onDone }) {
         <button className="primary" onClick={extract} disabled={busy || (!files.length && !text.trim())}>
           {busy ? "Đang tổng hợp…" : "Đọc và tổng hợp yêu cầu →"}
         </button>
-        {!files.length && !text.trim() ? <button className="link" onClick={() => setText("Dữ liệu Codelab mẫu Lab 03")}>Dùng Codelab mẫu đã tải sẵn</button> : null}
+        {!files.length && !text.trim() ? <button className="link" onClick={() => setText(sampleCodelab)}>Dùng Codelab mẫu đã tải sẵn</button> : null}
         {error ? <p className="error">{error}</p> : null}
       </div>
     </section>
@@ -112,7 +119,11 @@ function Requirements({ pack, onDone }) {
         <div><p className="eyebrow">Requirement Pack</p><h2>{items.filter(x => x.enabled !== false).length} yêu cầu được phát hiện</h2></div>
         <div className="severity-summary"><b>{counts.critical || 0} Critical</b><span>{counts.high || 0} High</span><span>{counts.medium || 0} Medium</span></div>
       </div>
-      {pack.conflicts.length ? <div className="conflict-banner"><b>⚠ Xung đột nguồn</b><span>GitHub rubric yêu cầu Hybrid Flowchart nhưng checklist Codelab không nhắc tới. Mặc định giữ để kiểm tra an toàn.</span></div> : null}
+      {pack.conflicts.length ? <div className="conflict-banner"><b>⚠ Xung đột nguồn</b><span>{pack.conflicts.length} yêu cầu khác nhau giữa các nguồn. Mặc định giữ để kiểm tra an toàn.</span></div> : null}
+      <div className="conflict-banner">
+        <b>{pack.source_summary.ai_trace.mode === "ai" ? "✓ AI thật" : "○ Offline mock"}</b>
+        <span>{pack.source_summary.ai_trace.mode === "ai" ? `${pack.source_summary.ai_trace.provider} · ${pack.source_summary.ai_trace.model} đã tạo requirement từ Codelab và GitHub.` : `${pack.source_summary.ai_trace.reason}; đang dùng pack dự phòng.`}</span>
+      </div>
       <div className="filters">
         {categories.map(category => <button className={filter === category ? "selected" : ""} onClick={() => setFilter(category)} key={category}>{category === "all" ? "Tất cả" : category}</button>)}
       </div>
@@ -169,9 +180,10 @@ function Submission({ pack, onDone }) {
   );
 }
 
-function Results({ result, onRerun }) {
+function Results({ result, onRerun, rerunning, rerunError }) {
   const [feedback, setFeedback] = useState(false);
   const risk = result.highest_risk;
+  useEffect(() => setFeedback(false), [result.checked_at]);
   async function markWrong() {
     await request(`/analysis/${result.analysis_id}/feedback`, {
       method: "POST",
@@ -184,7 +196,10 @@ function Results({ result, onRerun }) {
       <div className="result-main">
         <div className="readiness">
           <span className={result.readiness}>{result.readiness === "ready" ? "READY" : "NOT READY"}</span>
-          <div><b>{result.summary.pass} đạt</b> · {result.summary.fail} chưa đạt · {result.summary.needs_review} cần xem xét</div>
+          <div>
+            <b>{result.summary.pass} đạt</b> · {result.summary.fail} chưa đạt · {result.summary.needs_review} cần xem xét
+            <small className="run-time">Kiểm tra lúc {new Date(result.checked_at).toLocaleTimeString("vi-VN")}</small>
+          </div>
         </div>
         {risk ? <article className="risk-card">
           <p className="critical-label">CRITICAL · RỦI RO CAO NHẤT</p>
@@ -205,7 +220,8 @@ function Results({ result, onRerun }) {
         <p className="eyebrow">Checklist</p>
         <h3>Tất cả yêu cầu</h3>
         {result.findings.map(finding => <div className="check-item" key={finding.requirement_id}><span className={finding.status}>{finding.status === "pass" ? "✓" : finding.status === "fail" ? "×" : "!"}</span><div><b>{finding.requirement_title}</b><small>{finding.summary}</small></div></div>)}
-        <button className="primary full" onClick={onRerun}>↻ Kiểm tra lại</button>
+        <button className="primary full" onClick={onRerun} disabled={rerunning}>{rerunning ? "Đang kiểm tra…" : "↻ Kiểm tra lại"}</button>
+        {rerunError ? <p className="error">{rerunError}</p> : null}
       </aside>
     </section>
   );
@@ -215,19 +231,29 @@ function App() {
   const [step, setStep] = useState(0);
   const [pack, setPack] = useState();
   const [result, setResult] = useState();
+  const [rerunning, setRerunning] = useState(false);
+  const [rerunError, setRerunError] = useState("");
   async function rerun() {
-    setResult(await request(`/analysis/${result.analysis_id}/rerun`, { method: "POST" }));
+    setRerunning(true);
+    setRerunError("");
+    try {
+      setResult(await request(`/analysis/${result.analysis_id}/rerun`, { method: "POST" }));
+    } catch (reason) {
+      setRerunError(reason.message);
+    } finally {
+      setRerunning(false);
+    }
   }
   return (
     <>
-      <header><div className="brand"><span>LG</span><div><b>LabGuard</b><small>AI pre-submission checker</small></div></div><div className="lab-chip">Lab 03 · Chatbot vs ReAct Agent</div></header>
+      <header><div className="brand"><span>LG</span><div><b>LabGuard</b><small>AI pre-submission checker</small></div></div><div className="lab-chip">Multi-lab · Dynamic rubric</div></header>
       <main>
         <div className="hero"><div><p className="eyebrow">Kiểm tra trước. Nộp bài tự tin.</p><h1>Bài Lab của bạn<br /><em>đã thật sự sẵn sàng?</em></h1></div><p>Đối chiếu Codelab, rubric và repo trong một luồng kiểm tra. Tìm đúng rủi ro quan trọng nhất trước khi dùng lượt nộp.</p></div>
         <Stepper step={step} />
         {step === 0 ? <Sources onDone={data => { setPack(data); setStep(1); }} /> : null}
         {step === 1 ? <Requirements pack={pack} onDone={data => { setPack(data); setStep(2); }} /> : null}
         {step === 2 ? <Submission pack={pack} onDone={data => { setResult(data); setStep(3); }} /> : null}
-        {step === 3 ? <Results result={result} onRerun={rerun} /> : null}
+        {step === 3 ? <Results result={result} onRerun={rerun} rerunning={rerunning} rerunError={rerunError} /> : null}
       </main>
       <footer><b>LabGuard</b><span>Không tự sửa · Không chạy code · Không tự nộp bài</span></footer>
     </>
